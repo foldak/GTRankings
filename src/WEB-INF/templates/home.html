@@ -1,0 +1,119 @@
+<!DOCTYPE html SYSTEM "http://www.thymeleaf.org/dtd/xhtml1-strict-thymeleaf-spring4-4.dtd">
+
+<html xmlns="http://www.w3.org/1999/xhtml"
+	xmlns:th="http://www.thymeleaf.org">
+
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
+<link rel="stylesheet"
+	href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.6/css/bootstrap.min.css"></link>
+<script
+	src="https://cdnjs.cloudflare.com/ajax/libs/angular.js/1.5.5/angular.js">
+	
+</script>
+<script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/jquery/2.2.4/jquery.min.js"></script>
+<!-- <script
+	src="https://ajax.googleapis.com/ajax/libs/jquery/1.11.3/jquery.min.js"></script> -->
+<script
+	src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.6/js/bootstrap.min.js"></script>
+<script
+	src="https://cdnjs.cloudflare.com/ajax/libs/angular-filter/0.5.8/angular-filter.min.js"></script>
+<script th:src="@{/resources/js/viewController.js}"
+	type="text/javascript"></script>
+
+<style type="text/css">
+.carousel-indicators li {
+  background-color: #000;
+  background-color: rgba(70,70,70,.25);
+}
+
+.carousel-indicators .active {
+  background-color: #444;
+  
+} 
+
+.carousel-indicators {
+  bottom:-15px;
+}
+</style>
+</head>
+<body>
+<div th:include="navbar"></div>
+<div class="container">
+	<div class="jumbotron">
+	<h1 align="center">Ostatnie wyniki</h1>
+	</div>
+
+	<div ng-app="gtApp" ng-controller="homeController">
+		<div id="lastResults" class="carousel slide" data-ride="carousel">
+
+		<div class="center-block">
+		<div class="col-md-12">
+			<div class="carousel-inner" role="listbox" ng-init="getLastThreeRaces()">
+				
+				<div class="item active">
+						<h2 align = "center">{{lastThreeRaces[0].championship.name}}***{{lastThreeRaces[0].track.name}}***{{lastThreeRaces[0].date}}</h2>
+					<table class="table table-bordered">
+						
+						<tr>
+							<th>Miejsce:</th>
+							<th>Kierowca:</th>
+							<th>Punkty:</th>
+						</tr>
+						<tr ng-repeat="position in positions[0]">
+							<td width="10%" ng-click="">{{position.position}}</td>
+							<td width="50%">{{position.driver.nick}}</td>
+							<td width="40%">{{points[position.position]}}</td>
+						</tr>
+					</table>
+				</div>
+				
+				<div class="item">
+				<h2 align = "center">{{lastThreeRaces[1].championship.name}}***{{lastThreeRaces[1].track.name}}***{{lastThreeRaces[1].date}}</h2>
+					<table class="table table-bordered"
+						>
+						<tr>
+							<th>Pozycja:</th>
+							<th>Kierowca:</th>
+							<th>Miejsce:</th>
+						</tr>
+						<tr ng-repeat="position in positions[1]">
+							<td width="10%" ng-click="">{{position.position}}</td>
+							<td width="50%">{{position.driver.nick}}</td>
+							<td width="40%">{{points[position.position]}}</td>
+						</tr>
+					</table>
+				</div>
+				<div class="item ">
+				<h2 align = "center">{{lastThreeRaces[2].championship.name}}***{{lastThreeRaces[2].track.name}}***{{lastThreeRaces[2].date}}</h2>
+					<table class="table table-bordered"
+						>
+						<tr>
+							<th>Miejsce:</th>
+							<th>Kierowca:</th>
+							<th>Punkty:</th>
+						</tr>
+						<tr ng-repeat="position in positions[2]">
+							<td width="10%" ng-click="">{{position.position}}</td>
+							<td width="50%">{{position.driver.nick}}</td>
+							<td width="40%">{{points[position.position]}}</td>
+						</tr>
+					</table>
+				</div>
+				<div>
+				<ol class="carousel-indicators">
+				<li data-target="#lastResults" data-slide-to="0" class="active"></li>
+				<li data-target="#lastResults" data-slide-to="1"></li>
+				<li data-target="#lastResults" data-slide-to="2"></li>
+				</ol>
+				</div>
+			</div>
+			</div>
+			</div>
+			</div>
+			</div>
+			
+		
+</div>
+</body>
+</html>

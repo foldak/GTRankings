@@ -1,0 +1,39 @@
+<!DOCTYPE html SYSTEM "http://www.thymeleaf.org/dtd/xhtml1-strict-thymeleaf-spring4-4.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"
+	xmlns:th="http://www.thymeleaf.org">
+<body>
+<div ng-show="showChampRaces">
+	<table class="table table-bordered">
+		<tr>
+			<th>Data:</th>
+			<th>Tor:</th>
+			<th>Wyniki:</th>
+		</tr>
+		<tr ng-repeat="race in racesByChampId">
+			<td width="10%">{{race.date}}</td>
+			<td width="50%">{{race.track.name}}</td>
+			<th><button class="btn btn-default"  ng-click="getRaceById(race.id); getPositionsByRaceId(race.id); editShowChampRacesDetails()">Wyniki wyścigu</button></th>
+		</tr>
+	</table>
+	<button class="btn btn-default" ng-click="editShow();"><span class="glyphicon glyphicon-hand-left"></span>Wróć</button>
+	</div>
+	
+	<div ng-show="showChampRacesDetails">
+				<h2 align = "center">Wyniki wyścigu {{race.championship.name}} w dniu {{race.date}} na torze {{race.track.name}}</h2>
+			<table class="table table-bordered">
+			<tr>
+			<th>Miejsce:</th>
+			<th>Kierowca:</th>
+			<th>Punkty</th>
+			</tr>
+			<tr ng-repeat="position in positions[0]" >
+							<td width="10%" ng-click="">{{position.position}}</td>
+							<td width="50%">{{position.driver.nick}}</td>
+							<td width="40%">{{points[position.position]}}</td>
+						</tr>
+			</table>
+			<button class="btn btn-default" ng-click="editShowChampRacesDetails()"><span class="glyphicon glyphicon-hand-left"></span>Wróć</button>
+			</div>
+			
+</body>
+</html>

@@ -1,0 +1,60 @@
+<!DOCTYPE html SYSTEM "http://www.thymeleaf.org/dtd/xhtml1-strict-thymeleaf-spring4-4.dtd">
+
+<html xmlns="http://www.w3.org/1999/xhtml"
+xmlns:th="http://www.thymeleaf.org">
+
+	<head>
+		<meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
+		<link rel="stylesheet"  href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.6/css/bootstrap.min.css"></link>
+		<script src="https://cdnjs.cloudflare.com/ajax/libs/angular.js/1.5.5/angular.js">
+		</script>
+		<script src="https://ajax.googleapis.com/ajax/libs/jquery/1.11.3/jquery.min.js"></script>
+		<script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.6/js/bootstrap.min.js"></script>
+		<script src="https://cdnjs.cloudflare.com/ajax/libs/angular-filter/0.5.8/angular-filter.min.js"></script>
+		<script th:src="@{/resources/js/controller.js}"  type="text/javascript"></script>
+	</head>
+	<body ng-app="gtApp" ng-controller="adminController">
+		<ul class="nav nav-tabs">
+			<li class="active"><a data-toggle="tab" href="#home">Home</a></li>
+			<li><a data-toggle="tab" href="#champAdd">Dodaj mistrzostwa</a></li>
+			<li><a data-toggle="tab" href="#raceAdd">Dodaj wyścig</a></li>
+			<li><a data-toggle="tab" href="#driverAdd">Dodaj kierowcę</a></li>
+			<li><a data-toggle="tab" href="#trackAdd">Dodaj tor</a></li>
+			<li><a data-toggle="tab" href="#champEdit">Edytuj mistrzostwa</a></li>
+			<li><a data-toggle="tab" href="#raceEdit">Edytuj wyścig</a></li>
+			<li><a data-toggle="tab" href="#driverEdit">Edytuj kierowcę</a></li>
+			<li><a data-toggle="tab" href="#trackEdit">Edytuj tor</a></li>
+		</ul>
+		
+		<div class="tab-content">
+			<div id="home" class="tab-pane fade in active">
+				<h3>Home</h3>
+				<p>Jesteś w panelu administracyjnym w którym możesz dodawać i edytować zawartość na stronie.</p> 
+			</div>
+			<div id="champAdd" class="tab-pane fade" th:include="addChamp">
+			</div>
+			
+			<div id="champEdit" class="tab-pane fade" th:include="editChamp">		
+			</div>
+			
+			<div id="driverAdd" class="tab-pane fade"  th:include="addDriver">
+			</div>
+			
+			<div id="driverEdit" class="tab-pane fade" th:include="editDriver">		
+			</div>
+			
+			<div id="raceAdd" class="tab-pane fade"  th:include="addRace">
+			</div>
+			
+			<div id="raceEdit" class="tab-pane fade"  th:include="editRace">
+			</div>
+			<div id="trackAdd" class="tab-pane fade"  th:include="addTrack">
+			</div>
+			
+			<div id="trackEdit" class="tab-pane fade"  th:include="editTrack">
+			</div>
+			
+		</div>
+	</body>
+	
+</html>

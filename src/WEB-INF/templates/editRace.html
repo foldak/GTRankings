@@ -1,0 +1,106 @@
+<!DOCTYPE html SYSTEM "http://www.thymeleaf.org/dtd/xhtml1-strict-thymeleaf-spring4-4.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"
+xmlns:th="http://www.thymeleaf.org">
+<body>
+	<div ng-show="show">
+	<h2>Szukaj wyścigu(nazwa mistrzostw):</h2>
+	
+	<input type="text" class="form-control" ng-model="search" ></input>
+	
+	</div>
+		<table class="table table-hover" ng-init="getAllRaces()" ng-show="show">
+				<tr>
+				<th>Mistrzostwa:</th>
+				<th>Tor</th>
+				<th>Data</th>
+				</tr>
+				<tr ng-repeat="race in races | filterBy: ['championship.name'] : search">
+				<th ng-click="editShow();getByRaceId(race.id); getPositionsByRaceId(race.id)">{{race.championship.name}}</th>
+				<th ng-click="editShow();getByRaceId(race.id); getPositionsByRaceId(race.id)">{{race.track.name}}</th>
+				<th ng-click="editShow();getByRaceId(race.id); getPositionsByRaceId(race.id)">{{race.date}}</th>
+				</tr>
+			</table>
+			
+			<form role="form" ng-hide="show" ng-init="getAllDrivers(); getAllChamps(); getAllTracks()">
+				<h2 align = "center">Edycja wyścigu</h2>
+			<label>Mistrzostwa:</label>
+			<select class="form-control" ng-model="editRace.championship" ng-options="championship.name for championship in champs"></select>
+			<div class="well well-sm">{{editRace.championship.name}}</div>
+			
+			<label>Tor:</label>
+			<select class="form-control" ng-model="editRace.track" ng-options="track.name for track in tracks"></select>
+			<div class="well well-sm">{{editRace.track.name}}</div>
+			
+			<div class="form-group">
+				<label>Czy zaliczać do rankingu Oldboya?:</label>
+				<label class="radio-inline"><input type="radio" name="optradio" data-ng-model="editRace.inOldboyRank" data-ng-value="1"></input>Tak</label>
+				<label class="radio-inline"><input type="radio" name="optradio" data-ng-model="editRace.inOldboyRank" data-ng-value="0"></input>Nie</label>
+			</div>
+			
+			<div class="form-group">
+				<label>Podaj rw wyścigu(jeżeli nie zaliczany do rankingu wpisz 0):</label>
+				<input type="text" class="form-control" ng-model="editRace.rw">{{editRace.rw}}</input>
+			</div>
+			
+			<div class="form-group">
+				<label>Podaj datę wyścigu (podaj w formacie YYYY-MM-DD):</label>
+				<input type="text" class="form-control" ng-model="editRace.date">{{editRace.date}}</input>
+			</div>
+			
+
+			
+			
+			
+			<h3>Wyniki:</h3>
+			
+			<div class="form">
+				<div class="row">
+				<div class="col-md-4">
+				<label>P1: {{positions[0].driver.nick}}</label> <button  ng-click="deletePosition(0)" type="button" class="btn btn-danger btn-xs"><span class="glyphicon glyphicon-remove"></span> Usuń </button>
+				<select class="form-control" ng-model="positions[0].driver" ng-options="driver.nick for driver in drivers" ng-click="positions[0].position=1; saveRaceInPosition(0)"></select>
+				<label>P3: {{positions[2].driver.nick}}</label><button  ng-click="deletePosition(2)" type="button" class="btn btn-danger btn-xs"><span class="glyphicon glyphicon-remove"></span> Usuń </button>
+				<select class="form-control" ng-model="positions[2].driver" ng-options="driver.nick for driver in drivers" ng-click="positions[2].position=3; saveRaceInPosition(2)"></select>
+				<label>P5: {{positions[4].driver.nick}}</label><button  ng-click="deletePosition(4)" type="button" class="btn btn-danger btn-xs"><span class="glyphicon glyphicon-remove"></span> Usuń </button>
+				<select class="form-control" ng-model="positions[4].driver" ng-options="driver.nick for driver in drivers" ng-click="positions[4].position=5; saveRaceInPosition(4)"></select>
+				<label>P7: {{positions[6].driver.nick}}</label><button  ng-click="deletePosition(6)" type="button" class="btn btn-danger btn-xs"><span class="glyphicon glyphicon-remove"></span> Usuń </button>
+				<select class="form-control" ng-model="positions[6].driver" ng-options="driver.nick for driver in drivers" ng-click="positions[6].position=7; saveRaceInPosition(6)"></select>
+				<label>P9: {{positions[8].driver.nick}}</label><button  ng-click="deletePosition(8)" type="button" class="btn btn-danger btn-xs"><span class="glyphicon glyphicon-remove"></span> Usuń </button>
+				<select class="form-control" ng-model="positions[8].driver" ng-options="driver.nick for driver in drivers" ng-click="positions[8].position=9; saveRaceInPosition(8)"></select>
+				<label>P11: {{positions[10].driver.nick}}</label><button  ng-click="deletePosition(10)" type="button" class="btn btn-danger btn-xs"><span class="glyphicon glyphicon-remove"></span> Usuń </button>
+				<select class="form-control" ng-model="positions[10].driver" ng-options="driver.nick for driver in drivers" ng-click="positions[10].position=11; saveRaceInPosition(10)"></select>
+				<label>P13: {{positions[12].driver.nick}}</label><button  ng-click="deletePosition(12)" type="button" class="btn btn-danger btn-xs"><span class="glyphicon glyphicon-remove"></span> Usuń </button>
+				<select class="form-control" ng-model="positions[12].driver" ng-options="driver.nick for driver in drivers" ng-click="positions[12].position=13; saveRaceInPosition(12)"></select>
+				<label>P15: {{positions[14].driver.nick}}</label><button  ng-click="deletePosition(14)" type="button" class="btn btn-danger btn-xs"><span class="glyphicon glyphicon-remove"></span> Usuń </button>
+				<select class="form-control" ng-model="positions[14].driver" ng-options="driver.nick for driver in drivers" ng-click="positions[14].position=15; saveRaceInPosition(14)"></select>
+				
+				</div>
+				<div class="col-md-4">
+				<label>P2: {{positions[1].driver.nick}}</label><button  ng-click="deletePosition(1)" type="button" class="btn btn-danger btn-xs"><span class="glyphicon glyphicon-remove"></span> Usuń </button>
+				<select class="form-control" ng-model="positions[1].driver" ng-options="driver.nick for driver in drivers" ng-click="positions[1].position=2; saveRaceInPosition(1)"></select>
+				<label>P4: {{positions[3].driver.nick}}</label><button  ng-click="deletePosition(3)" type="button" class="btn btn-danger btn-xs"><span class="glyphicon glyphicon-remove"></span> Usuń </button>
+				<select class="form-control" ng-model="positions[3].driver" ng-options="driver.nick for driver in drivers" ng-click="positions[3].position=4; saveRaceInPosition(3)"></select>
+				<label>P6: {{positions[5].driver.nick}}</label><button  ng-click="deletePosition(5)" type="button" class="btn btn-danger btn-xs"><span class="glyphicon glyphicon-remove"></span> Usuń </button>
+				<select class="form-control" ng-model="positions[5].driver" ng-options="driver.nick for driver in drivers" ng-click="positions[5].position=6; saveRaceInPosition(5)"></select>
+				<label>P8: {{positions[7].driver.nick}}</label><button  ng-click="deletePosition(7)" type="button" class="btn btn-danger btn-xs"><span class="glyphicon glyphicon-remove"></span> Usuń </button>
+				<select class="form-control" ng-model="positions[7].driver" ng-options="driver.nick for driver in drivers" ng-click="positions[7].position=8; saveRaceInPosition(7)"></select>
+				<label>P10: {{positions[9].driver.nick}}</label><button  ng-click="deletePosition(9)" type="button" class="btn btn-danger btn-xs"><span class="glyphicon glyphicon-remove"></span> Usuń </button>
+				<select class="form-control" ng-model="positions[9].driver" ng-options="driver.nick for driver in drivers" ng-click="positions[9].position=10; saveRaceInPosition(9)"></select>
+				<label>P12: {{positions[11].driver.nick}}</label><button  ng-click="deletePosition(11)" type="button" class="btn btn-danger btn-xs"><span class="glyphicon glyphicon-remove"></span> Usuń </button>
+				<select class="form-control" ng-model="positions[11].driver" ng-options="driver.nick for driver in drivers" ng-click="positions[11].position=12; saveRaceInPosition(11)"></select>
+				<label>P14: {{positions[13].driver.nick}}</label><button  ng-click="deletePosition(13)" type="button" class="btn btn-danger btn-xs"><span class="glyphicon glyphicon-remove"></span> Usuń </button>
+				<select class="form-control" ng-model="positions[13].driver" ng-options="driver.nick for driver in drivers" ng-click="positions[13].position=14; saveRaceInPosition(13)"></select>
+				<label>P16: {{positions[15].driver.nick}}</label><button  ng-click="deletePosition(15)" type="button" class="btn btn-danger btn-xs"><span class="glyphicon glyphicon-remove"></span> Usuń </button>
+				<select class="form-control" ng-model="positions[15].driver" ng-options="driver.nick for driver in drivers" ng-click="positions[15].position=16; saveRaceInPosition(15)"></select>
+				</div>
+			</div>
+			</div>
+			
+			<button class="btn btn-default" ng-click="editShow()"><span class="glyphicon glyphicon-hand-left"></span>Wróć</button>
+			<button type="submit" class="btn btn-primary" ng-click="updateRace()">Edytuj wyścig</button>
+			<button type="submit" class="btn btn-primary" ng-click="createPositions()">Zapisz wyniki</button>
+			<button type="submit" class="btn btn-danger" ng-click="deleteRace(editRace.id); deletePositionsByRaceId(editRace.id)"><span class="glyphicon glyphicon-remove-sign"></span>Usuń wyścig</button>
+			
+		</form>
+			<p class="text-success">{{info}}</p>
+</body>
+</html>

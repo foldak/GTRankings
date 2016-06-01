@@ -1,0 +1,37 @@
+<!DOCTYPE html SYSTEM "http://www.thymeleaf.org/dtd/xhtml1-strict-thymeleaf-spring4-4.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"
+xmlns:th="http://www.thymeleaf.org">
+<body>
+<div ng-show="show">
+	<h2>Szukaj mistrzostw:</h2>
+
+	<input type="text" class="form-control" ng-model="search" ></input>
+	</div>
+			<table class="table table-hover" ng-init="getAllChamps()" ng-show="show">
+				<tr>
+				<th>Nazwa:</th>
+				<th>Liczba wyścigów:</th>
+				</tr>
+				<tr ng-repeat="champ in champs | filter:{name: search}">
+				<th ng-click="editShow();getChamp(champ.id)">{{champ.name}}</th>
+				<th ng-click="editShow();getChamp(champ.id)">{{champ.numberOfRaces}}</th>				
+				</tr>
+			</table>
+			
+			<form role="form" ng-hide="show">
+				<h2 align = "center">Edycja mistrzostw</h2>
+			<div class="form-group">
+				<p class="text-info">Nazwa:</p>
+				<input type="text" class="form-control" ng-model="editChamp.name">{{editChamp.name}}</input>
+			</div>
+			<div class="form-group">
+				<p class="text-info">Liczba wyścigów:</p>
+				<input type="text" class="form-control" ng-model="editChamp.numberOfRaces">{{editChamp.numberOfRaces}}</input>
+			</div>
+			<button class="btn btn-default" ng-click="editShow()"><span class="glyphicon glyphicon-hand-left"></span>Wróć</button>
+			<button type="submit" class="btn btn-primary" ng-click="updateChamp()">Edytuj mistrzostwa</button>
+			<button type="submit" class="btn btn-danger" ng-click="deleteChamp(editChamp.id)"><span class="glyphicon glyphicon-remove-sign"></span>Usuń mistrzostwa</button>
+		</form>
+			<p class="text-success">{{info}}</p>
+</body>
+</html>
